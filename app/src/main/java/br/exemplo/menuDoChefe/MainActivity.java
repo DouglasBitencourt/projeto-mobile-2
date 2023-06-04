@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import br.exemplo.menuDoChefe.R;
+
 import br.exemplo.menuDoChefe.controller.BancoController;
 import br.exemplo.menuDoChefe.dao.MockDao;
 import br.exemplo.menuDoChefe.entity.Post;
@@ -79,24 +80,26 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < finalPosts.size(); i++) {
             //CRIACAO DE UM LAYOUT MAIOR PARA AJUSTAR AS INFORMAÇÕES MELHOR
             LinearLayout layoutInternoTotal = new LinearLayout(this);
+            layoutInternoTotal.setBackgroundColor(Color.rgb(255, 0, 0));
             layoutInternoTotal.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             layoutInternoTotal.setOrientation(LinearLayout.VERTICAL);
 
             //NESSE LAYOUT VAI A IMAGEM E O TÍTULO
             LinearLayout layoutInterno = new LinearLayout(this);
+            layoutInterno.setBackgroundColor(Color.rgb(255, 0, 0));
             layoutInterno.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             layoutInterno.setOrientation(LinearLayout.HORIZONTAL);
             lL.addView(layoutInternoTotal);
 
             ImageView imagem = new ImageView(this);
-            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(400, 400);
+            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(500, 500);
             imagem.setLayoutParams(params);
             imagem.setImageBitmap(finalListImagens.get(i));
-            imagem.setPadding(30,30,30, 0);
+            imagem.setPadding(30,50,30, 0);
 
             TextView titulo = new TextView(lL.getContext());
             titulo.setText(finalPosts.get(i).getTitulo());
-            titulo.setTextSize(20f);
+            titulo.setTextSize(40f);
             titulo.setPadding(30,125,30, 10);
 
             TextView descricao = new TextView(lL.getContext());
@@ -106,9 +109,10 @@ public class MainActivity extends AppCompatActivity {
 
             TextView preco = new TextView(lL.getContext());
             String precoLabel = finalPosts.get(i).getPreco() != null ? "R$"+finalPosts.get(i).getPreco().toString() : "Consulte o preço!";
-            preco.setText("Valor: " + precoLabel);
-            preco.setTextSize(17f);
-            preco.setPadding(30,5,30, 30);
+            preco.setText("Preco:" + precoLabel);
+            preco.setTextSize(25f);
+            preco.setTextColor(Color.rgb(255, 0, 0));
+            preco.setPadding(35,10,35, 35);
 
             layoutInterno.addView(imagem);
             layoutInterno.addView(titulo);
