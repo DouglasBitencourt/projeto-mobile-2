@@ -10,7 +10,6 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_height="match_parent"
-        android:background="#8B4513"
         android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,9 +23,9 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FF0000"
-
-            android:showDividers="middle" />
+            android:background="#FF0000">
+            
+        </LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

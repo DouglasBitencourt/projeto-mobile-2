@@ -20,7 +20,6 @@ public class Post implements Serializable {
         this.urlImagem = urlImagem;
         this.id = id;
         this.titulo = titulo;
-
         this.preco = preco;
     }
 

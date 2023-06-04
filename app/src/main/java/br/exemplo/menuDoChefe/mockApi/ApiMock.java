@@ -25,7 +25,7 @@ public class ApiMock {
     }
 
     private void carregarPosts() {
-        posts.add(new Post(1L, "Prato: Salmão Grelhado com Molho de Limão", " Um suculento filé de salmão grelhado, servido com um molho de limão fresco e acompanhado de legumes salteados. Uma opção saudável e deliciosa para os amantes de peixe.", "https://i.im.ge/2023/06/04/hbhqqL.filezin.jpg", 35.93));
+        posts.add(new Post(1L, "Pratooooo: Salmão Grelhado com Molho de Limão", " Um suculento filé de salmão grelhado, servido com um molho de limão fresco e acompanhado de legumes salteados. Uma opção saudável e deliciosa para os amantes de peixe.", "https://i.im.ge/2023/06/04/hbhqqL.filezin.jpg", 35.93));
         posts.add(new Post(2L, "Prato: Risoto de Cogumelos Silvestres", "Um cremoso risoto preparado com uma variedade de cogumelos silvestres, finalizado com queijo parmesão e um toque de trufas. Uma explosão de sabores terrosos em cada garfada.", "https://i.im.ge/2023/06/04/hbhYsq.risoto-cogumelo.jpg", 28.55));
         posts.add(new Post(3L, "Prato: Filé Mignon ao Molho de Vinho Tinto\n", "Um suculento filé mignon grelhado, regado com um rico molho de vinho tinto e acompanhado de batatas gratinadas. Uma combinação clássica que agrada aos paladares mais exigentes.", "https://i.im.ge/2023/06/04/hbhczP.filezin.jpg", 42.00));
         posts.add(new Post(4L, "Prato: Lasanha à Bolonhesa", "Camadas de massa fresca intercaladas com um delicioso molho à bolonhesa, queijo derretido e temperos aromáticos. Uma lasanha clássica e reconfortante que traz o sabor da Itália para a mesa.", "https://i.im.ge/2023/06/04/hbhx4C.lasanha.webp", 22.99));
