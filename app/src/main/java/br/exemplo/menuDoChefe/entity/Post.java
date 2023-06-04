@@ -5,12 +5,10 @@ import java.io.Serializable;
 public class Post implements Serializable {
 
     private Long id;
-
-    private String titulo;
-
     private String descricao;
 
     private String urlImagem;
+    private String titulo;
 
     private Double preco;
 
@@ -18,17 +16,18 @@ public class Post implements Serializable {
     }
 
     public Post(Long id, String titulo, String descricao, String urlImagem, Double preco) {
-        this.id = id;
-        this.titulo = titulo;
         this.descricao = descricao;
         this.urlImagem = urlImagem;
+        this.id = id;
+        this.titulo = titulo;
+
         this.preco = preco;
     }
 
     public Post(Long id, String titulo, String descricao, String urlImagem) {
         this.id = id;
-        this.titulo = titulo;
         this.descricao = descricao;
+        this.titulo = titulo;
         this.urlImagem = urlImagem;
     }
 
@@ -38,6 +37,13 @@ public class Post implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getUrlImagem() {
+        return urlImagem;
     }
 
     public String getTitulo() {
@@ -52,13 +58,7 @@ public class Post implements Serializable {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 
-    public String getUrlImagem() {
-        return urlImagem;
-    }
 
     public void setUrlImagem(String urlImagem) {
         this.urlImagem = urlImagem;

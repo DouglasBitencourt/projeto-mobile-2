@@ -34,10 +34,9 @@ public class BancoController {
 
         db = banco.getWritableDatabase();
         valores = new ContentValues();
+        valores.put("urlImage", urlImagem);
         valores.put("titulo", titulo);
         valores.put("descricao", descricao);
-        valores.put("urlImage", urlImagem);
-
         resultado = db.insert("posts", null, valores);
         db.close();
 
@@ -99,10 +98,11 @@ public class BancoController {
         List<Post> posts = new ArrayList<>();
 
         while (cursor.moveToNext()) {
-            Integer id = cursor.getInt(0);
-            String titulo = cursor.getString(1);
             String descricao = cursor.getString(2);
             String urlImage = cursor.getString(3);
+            Integer id = cursor.getInt(0);
+            String titulo = cursor.getString(1);
+
             posts.add(new Post(id.longValue(), titulo,descricao, urlImage));
         }
 

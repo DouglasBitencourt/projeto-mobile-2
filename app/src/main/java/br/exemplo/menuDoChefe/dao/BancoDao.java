@@ -5,13 +5,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class BancoDao extends SQLiteOpenHelper {
-
-    private static final String NOME_BANCO = "banco.db";
-    private static final String TABELA = "posts";
-    private static final String ID = "id";
-    private static final String TITULO = "titulo";
     private static final String DESCRICAO = "descricao";
     private static final String IMAGE = "urlImage";
+    private static final String NOME_BANCO = "banco.db";
+    private static final String TITULO = "titulo";
+    private static final String TABELA = "posts";
+    private static final String ID = "id";
+
+
     private static final int VERSAO = 1;
 
     public BancoDao(Context context){
