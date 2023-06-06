@@ -1,4 +1,4 @@
-package br.exemplo.menuDoChefe.controller;
+package br.directory.menuDoChefe.Controlador;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,16 +14,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import br.exemplo.menuDoChefe.dao.BancoDao;
-import br.exemplo.menuDoChefe.entity.Post;
+import br.directory.menuDoChefe.DAOO.BancoDaOO;
+import br.directory.menuDoChefe.Entidade.Metodo;
 
-public class BancoController {
+public class BancoControl {
 
     private SQLiteDatabase db;
-    private BancoDao banco;
+    private BancoDaOO banco;
 
-    public BancoController(Context context){
-        banco = new BancoDao(context);
+    public BancoControl(Context context){
+        banco = new BancoDaOO(context);
     }
 
     public String inserir(String titulo, String descricao, String urlImagem){
@@ -49,7 +49,7 @@ public class BancoController {
         banco.onUpgrade(db,0,0);
     }
 
-    public String inserirImagemLocalmente(Bitmap bitmap, String name, Context context) {
+    public String ImputImageLocal(Bitmap bitmap, String name, Context context) {
         ContextWrapper cw = new ContextWrapper(context.getApplicationContext());
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
         File mypath=new File(directory,name+".jpg");
@@ -69,8 +69,24 @@ public class BancoController {
         }
         return directory.getAbsolutePath();
     }
+    public List<Metodo> carregaPosts() {
+        db = banco.getReadableDatabase();
 
-    public boolean verificaBancoPopulado() {
+        Cursor cursor= db.rawQuery("SELECT id, titulo, descricao, urlImage FROM posts", null);
+        List<Metodo> metodos = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            String descricao = cursor.getString(2);
+            String urlImage = cursor.getString(3);
+            Integer id = cursor.getInt(0);
+            String titulo = cursor.getString(1);
+
+            metodos.add(new Metodo(id.longValue(), titulo,descricao, urlImage));
+        }
+
+        return metodos;
+    }
+    public boolean ChecksBD() {
         db = banco.getReadableDatabase();
 
         try {
@@ -85,30 +101,14 @@ public class BancoController {
         return false;
     }
 
-    public List<Post> carregaPosts() {
-        db = banco.getReadableDatabase();
 
-        Cursor cursor= db.rawQuery("SELECT id, titulo, descricao, urlImage FROM posts", null);
-        List<Post> posts = new ArrayList<>();
 
-        while (cursor.moveToNext()) {
-            String descricao = cursor.getString(2);
-            String urlImage = cursor.getString(3);
-            Integer id = cursor.getInt(0);
-            String titulo = cursor.getString(1);
-
-            posts.add(new Post(id.longValue(), titulo,descricao, urlImage));
-        }
-
-        return posts;
-    }
-
-    public List<Bitmap> carregaImagens(List<Post> posts, String pathImages) {
+    public List<Bitmap> UpploadImagens(List<Metodo> metodos, String pathImages) {
         //TODO CARREGAR DA BASE POR URL
         List<Bitmap> imagens = new ArrayList<>();
         try {
-            for (int i = 0; i < posts.size(); i++) {
-                File f=new File(pathImages, "imagem"+posts.get(i).getId()+".jpg");
+            for (int i = 0; i < metodos.size(); i++) {
+                File f=new File(pathImages, "imagem"+ metodos.get(i).getId()+".jpg");
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
                 imagens.add(b);
             }

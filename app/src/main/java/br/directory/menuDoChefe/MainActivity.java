@@ -1,4 +1,4 @@
-package br.exemplo.menuDoChefe;
+package br.directory.menuDoChefe;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
@@ -17,18 +17,18 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import br.exemplo.menuDoChefe.controller.BancoController;
-import br.exemplo.menuDoChefe.dao.MockDao;
-import br.exemplo.menuDoChefe.entity.Post;
+import br.directory.menuDoChefe.Controlador.BancoControl;
+import br.directory.menuDoChefe.DAOO.MockDaoJSON;
+import br.directory.menuDoChefe.Entidade.Metodo;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PATH_IMAGES = "/data/user/0/br.exemplo.menuDoChefe/app_imageDir";
+    private static final String PATH_IMAGES = "/data/user/0/br.directory.menuDoChefe/app_imageDir";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        MockDao mock = new MockDao();
-        BancoController bancoController = new BancoController(getBaseContext());
+        MockDaoJSON mock = new MockDaoJSON();
+        BancoControl bancoControl = new BancoControl(getBaseContext());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -40,27 +40,27 @@ public class MainActivity extends AppCompatActivity {
 
         executor.execute(() -> {
             try {
-                List<Post> posts;
+                List<Metodo> metodos;
                 List<Bitmap> listImagens;
-                boolean comInternet = logadoNaInternet();
+                boolean comInternet = ConectadoInternet();
                 if (comInternet) {
-                    posts = mock.getAllPostsFromApiMock();
-                    listImagens = mock.getAllImagesFromApiMockByPosts(posts);
-                    if(!bancoController.verificaBancoPopulado()) {
-                        salvarNoBancoEImagensLocalmente(bancoController, posts, listImagens);
+                    metodos = mock.getAllPostsFromApiMock();
+                    listImagens = mock.getAllImagesFromApiMockByPosts(metodos);
+                    if(!bancoControl.ChecksBD()) {
+                        SaveBDImagensLoc(bancoControl, metodos, listImagens);
                     }
                 } else {
 
-                    posts = bancoController.carregaPosts();
-                    listImagens = bancoController.carregaImagens(posts, PATH_IMAGES);
+                    metodos = bancoControl.carregaPosts();
+                    listImagens = bancoControl.UpploadImagens(metodos, PATH_IMAGES);
                 }
-                final List<Post> finalPosts = posts;
+                final List<Metodo> finalMetodos = metodos;
                 final List<Bitmap> finalListImagens = listImagens;
                 handler.post(() -> {
                     if (!comInternet) {
                         Toast.makeText(getApplicationContext(), "Sem conexão com a internet internet.", Toast.LENGTH_LONG).show();
                     }
-                    carregarPosts(lL, finalPosts, finalListImagens);
+                    UploadMetPosts(lL, finalMetodos, finalListImagens);
                     System.out.println("Reconectado.");
                 });
             } catch (Exception e) {
@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    private void carregarPosts(LinearLayout lL, List<Post> finalPosts, List<Bitmap> finalListImagens) {
-        for (int i = 0; i < finalPosts.size(); i++) {
+    private void UploadMetPosts(LinearLayout lL, List<Metodo> finalMetodos, List<Bitmap> finalListImagens) {
+        for (int i = 0; i < finalMetodos.size(); i++) {
             LinearLayout layoutInternoTotal = new LinearLayout(this);
             layoutInternoTotal.setBackgroundColor(Color.rgb(255, 0, 0));
             layoutInternoTotal.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -90,17 +90,17 @@ public class MainActivity extends AppCompatActivity {
             imagem.setPadding(30,50,30, 0);
 
             TextView titulo = new TextView(lL.getContext());
-            titulo.setText(finalPosts.get(i).getTitulo());
+            titulo.setText(finalMetodos.get(i).getTitulo());
             titulo.setTextSize(40f);
             titulo.setPadding(30,125,30, 10);
 
             TextView descricao = new TextView(lL.getContext());
-            descricao.setText(finalPosts.get(i).getDescricao());
+            descricao.setText(finalMetodos.get(i).getDescricao());
             descricao.setTextSize(17f);
             descricao.setPadding(30,5,30, 30);
 
             TextView preco = new TextView(lL.getContext());
-            String precoLabel = finalPosts.get(i).getPreco() != null ? "R$"+finalPosts.get(i).getPreco().toString() : "Consulte o preco";
+            String precoLabel = finalMetodos.get(i).getPreco() != null ? "R$"+ finalMetodos.get(i).getPreco().toString() : "Consulte o preco";
             preco.setText("Preco:" + precoLabel);
             preco.setTextSize(25f);
             preco.setTextColor(Color.rgb(255, 0, 0));
@@ -115,18 +115,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void salvarNoBancoEImagensLocalmente(BancoController bancoController, List<Post> posts, List<Bitmap> imagens) {
-        for (int i = 0; i < posts.size(); i++) {
-            String titulo = posts.get(i).getTitulo();
-            String descricao = posts.get(i).getDescricao();
-            String urlImage = posts.get(i).getUrlImagem();
-            String nomeArquivo = "imagem"+posts.get(i).getId();
-            bancoController.inserirImagemLocalmente(imagens.get(i), nomeArquivo, this);
-            bancoController.inserir(titulo, descricao, urlImage);
+    private void SaveBDImagensLoc(BancoControl bancoControl, List<Metodo> metodos, List<Bitmap> imagens) {
+        for (int i = 0; i < metodos.size(); i++) {
+            String urlImage = metodos.get(i).getUrlImagem();
+            String titulo = metodos.get(i).getTitulo();
+            String descricao = metodos.get(i).getDescricao();
+            String nomeArquivo = "imagem"+ metodos.get(i).getId();
+            bancoControl.ImputImageLocal(imagens.get(i), nomeArquivo, this);
+            bancoControl.inserir(titulo, descricao, urlImage);
         }
     }
 
-    private boolean logadoNaInternet() {
+    private boolean ConectadoInternet() {
         ConnectivityManager cm =
                 (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 

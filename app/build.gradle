@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'br.exemplo.menuDoChefe'
+    namespace 'br.directory.menuDoChefe'
     compileSdk 33
 
     defaultConfig {
-        applicationId "br.exemplo.menuDoChefe"
+        applicationId "br.directory.menuDoChefe"
         minSdk 24
         targetSdk 33
         versionCode 1

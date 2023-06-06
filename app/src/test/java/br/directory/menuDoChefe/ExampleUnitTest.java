@@ -1,4 +1,4 @@
-package br.exemplo.menuDoChefe;
+package br.directory.menuDoChefe;
 
 import org.junit.Test;
 

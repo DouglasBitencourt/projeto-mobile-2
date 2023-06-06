@@ -1,8 +1,8 @@
-package br.exemplo.menuDoChefe.entity;
+package br.directory.menuDoChefe.Entidade;
 
 import java.io.Serializable;
 
-public class Post implements Serializable {
+public class Metodo implements Serializable {
 
     private Long id;
     private String descricao;
@@ -12,10 +12,10 @@ public class Post implements Serializable {
 
     private Double preco;
 
-    public Post() {
+    public Metodo() {
     }
 
-    public Post(Long id, String titulo, String descricao, String urlImagem, Double preco) {
+    public Metodo(Long id, String titulo, String descricao, String urlImagem, Double preco) {
         this.descricao = descricao;
         this.urlImagem = urlImagem;
         this.id = id;
@@ -23,7 +23,7 @@ public class Post implements Serializable {
         this.preco = preco;
     }
 
-    public Post(Long id, String titulo, String descricao, String urlImagem) {
+    public Metodo(Long id, String titulo, String descricao, String urlImagem) {
         this.id = id;
         this.descricao = descricao;
         this.titulo = titulo;

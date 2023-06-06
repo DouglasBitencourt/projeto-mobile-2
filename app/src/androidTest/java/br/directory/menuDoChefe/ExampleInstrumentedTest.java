@@ -1,4 +1,4 @@
-package br.exemplo.menuDoChefe;
+package br.directory.menuDoChefe;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("br.exemplo.menuDoChefe", appContext.getPackageName());
+        assertEquals("br.directory.menuDoChefe", appContext.getPackageName());
     }
 }

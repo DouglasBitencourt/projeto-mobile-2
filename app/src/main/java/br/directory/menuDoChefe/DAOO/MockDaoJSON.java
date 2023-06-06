@@ -1,4 +1,4 @@
-package br.exemplo.menuDoChefe.dao;
+package br.directory.menuDoChefe.DAOO;
 
 import android.graphics.Bitmap;
 
@@ -10,26 +10,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.exemplo.menuDoChefe.mockApi.ApiMock;
-import br.exemplo.menuDoChefe.entity.Post;
+import br.directory.menuDoChefe.JSONMOCK.ApiMock;
+import br.directory.menuDoChefe.Entidade.Metodo;
 
-public class MockDao {
+public class MockDaoJSON {
 
     private ApiMock apiMock;
 
-    public MockDao() {
+    public MockDaoJSON() {
         apiMock = new ApiMock();
     }
 
-    public List<Post> getAllPostsFromApiMock() {
+    public List<Metodo> getAllPostsFromApiMock() {
         String response = apiMock.getAllPosts();
         Gson gson = new GsonBuilder().create();
-        return gson.fromJson(response, new TypeToken<ArrayList<Post>>() {}.getType());
+        return gson.fromJson(response, new TypeToken<ArrayList<Metodo>>() {}.getType());
     }
 
-    public List<Bitmap> getAllImagesFromApiMockByPosts(List<Post> posts) throws IOException {
+    public List<Bitmap> getAllImagesFromApiMockByPosts(List<Metodo> metodos) throws IOException {
         List<Bitmap> images = new ArrayList<>();
-        for (Post p: posts) {
+        for (Metodo p: metodos) {
             images.add(apiMock.carregarImagemByUrl(p.getUrlImagem()));
         }
         return images;
