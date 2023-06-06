@@ -44,19 +44,16 @@ public class MainActivity extends AppCompatActivity {
                 List<Bitmap> listImagens;
                 boolean comInternet = logadoNaInternet();
                 if (comInternet) {
-                    //CARREGA DO MOCK DAO
                     posts = mock.getAllPostsFromApiMock();
                     listImagens = mock.getAllImagesFromApiMockByPosts(posts);
                     if(!bancoController.verificaBancoPopulado()) {
                         salvarNoBancoEImagensLocalmente(bancoController, posts, listImagens);
                     }
                 } else {
-                    // PARA CAIR AQUI NÃO ESQUEÇA DE COLOCAR NO MODO AVIÃO
-                    //CARREGA DA MEMÓRIA INTERNA
+
                     posts = bancoController.carregaPosts();
                     listImagens = bancoController.carregaImagens(posts, PATH_IMAGES);
                 }
-                //EXIGÊNCIA QUE A VARIÁVEL SEJA FINAL
                 final List<Post> finalPosts = posts;
                 final List<Bitmap> finalListImagens = listImagens;
                 handler.post(() -> {
@@ -75,13 +72,11 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void carregarPosts(LinearLayout lL, List<Post> finalPosts, List<Bitmap> finalListImagens) {
         for (int i = 0; i < finalPosts.size(); i++) {
-            //CRIACAO DE UM LAYOUT MAIOR PARA AJUSTAR AS INFORMAÇÕES MELHOR
             LinearLayout layoutInternoTotal = new LinearLayout(this);
             layoutInternoTotal.setBackgroundColor(Color.rgb(255, 0, 0));
             layoutInternoTotal.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             layoutInternoTotal.setOrientation(LinearLayout.VERTICAL);
 
-            //NESSE LAYOUT VAI A IMAGEM E O TÍTULO
             LinearLayout layoutInterno = new LinearLayout(this);
             layoutInterno.setBackgroundColor(Color.rgb(255, 0, 0));
             layoutInterno.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -134,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean logadoNaInternet() {
         ConnectivityManager cm =
                 (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null &&
